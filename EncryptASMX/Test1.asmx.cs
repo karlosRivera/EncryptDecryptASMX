@@ -19,8 +19,8 @@ namespace EncryptASMX
     {
         public AuthenticateHeader Credentials;
 
-        [AuthExtension]
-        [SoapHeader("credentials", Required = true)]
+        //[AuthExtension]
+        [SoapHeader("Credentials", Required = true)]
         [WebMethod]
         public string Add(int x, int y)
         {
@@ -34,29 +34,32 @@ namespace EncryptASMX
         public string Password;
     }
 
-    [AttributeUsage(AttributeTargets.Method)]
-    public class AuthExtensionAttribute : SoapExtensionAttribute
-    {
-        int _priority = 1;
+    //[AttributeUsage(AttributeTargets.Method)]
+    //public class AuthExtensionAttribute : SoapExtensionAttribute
+    //{
+    //    int _priority = 1;
 
-        public override int Priority
-        {
-            get { return _priority; }
-            set { _priority = value; }
-        }
+    //    public override int Priority
+    //    {
+    //        get { return _priority; }
+    //        set { _priority = value; }
+    //    }
 
-        public override Type ExtensionType
-        {
-            get { return typeof(AuthExtension); }
-        }
-    }
+    //    public override Type ExtensionType
+    //    {
+    //        get { return typeof(AuthExtension); }
+    //    }
+    //}
 
     public class AuthExtension : SoapExtension
     {
         public override void ProcessMessage(SoapMessage message)
         {
+            var AfterDeserialize = "";
+            bool flag = false;
             if (message.Stage == SoapMessageStage.AfterDeserialize)
             {
+                AfterDeserialize = "AfterDeserialize";
                 //Check for an AuthHeader containing valid
                 //credentials
                 foreach (SoapHeader header in message.Headers)
@@ -68,16 +71,24 @@ namespace EncryptASMX
                             "jeff" &&
                             credentials.Password.ToLower() ==
                             "imbatman")
-                            return; // Allow call to execute
+                            flag = true;
+                            //return; // Allow call to execute
                         break;
                     }
                 }
 
                 // Fail the call if we get to here. Either the header
                 // isn't there or it contains invalid credentials.
-                throw new SoapException("Unauthorized",
-                    SoapException.ClientFaultCode);
             }
+
+            //if (AfterDeserialize == "AfterDeserialize")
+            //{
+            //    if (!flag)
+            //    {
+            //        throw new SoapException("Unauthorized", SoapException.ClientFaultCode);
+            //        //return;
+            //    }
+            //}
         }
 
         public override Object GetInitializer(Type type)
