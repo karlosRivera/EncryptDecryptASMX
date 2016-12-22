@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using System.Web.Services.Protocols;
+using AuthHeader;
+using AuthExtension;
 
 namespace EncryptASMX
 {
@@ -19,7 +21,7 @@ namespace EncryptASMX
     {
         public AuthenticateHeader Credentials;
 
-        //[AuthExtension]
+        [AuthExtension]
         [SoapHeader("Credentials", Required = true)]
         [WebMethod]
         public string Add(int x, int y)
@@ -28,11 +30,7 @@ namespace EncryptASMX
         }
     }
 
-    public class AuthenticateHeader : SoapHeader
-    {
-        public string UserName;
-        public string Password;
-    }
+
 
     //[AttributeUsage(AttributeTargets.Method)]
     //public class AuthExtensionAttribute : SoapExtensionAttribute
@@ -51,59 +49,59 @@ namespace EncryptASMX
     //    }
     //}
 
-    public class AuthExtension : SoapExtension
-    {
-        public override void ProcessMessage(SoapMessage message)
-        {
-            var AfterDeserialize = "";
-            bool flag = false;
-            if (message.Stage == SoapMessageStage.AfterDeserialize)
-            {
-                AfterDeserialize = "AfterDeserialize";
-                //Check for an AuthHeader containing valid
-                //credentials
-                foreach (SoapHeader header in message.Headers)
-                {
-                    if (header is AuthenticateHeader)
-                    {
-                        AuthenticateHeader credentials = (AuthenticateHeader)header;
-                        if (credentials.UserName.ToLower() ==
-                            "jeff" &&
-                            credentials.Password.ToLower() ==
-                            "imbatman")
-                            flag = true;
-                            //return; // Allow call to execute
-                        break;
-                    }
-                }
+    //public class AuthExtension : SoapExtension
+    //{
+    //    public override void ProcessMessage(SoapMessage message)
+    //    {
+    //        var AfterDeserialize = "";
+    //        bool flag = false;
+    //        if (message.Stage == SoapMessageStage.AfterDeserialize)
+    //        {
+    //            AfterDeserialize = "AfterDeserialize";
+    //            //Check for an AuthHeader containing valid
+    //            //credentials
+    //            foreach (SoapHeader header in message.Headers)
+    //            {
+    //                if (header is AuthenticateHeader)
+    //                {
+    //                    AuthenticateHeader credentials = (AuthenticateHeader)header;
+    //                    if (credentials.UserName.ToLower() ==
+    //                        "jeff" &&
+    //                        credentials.Password.ToLower() ==
+    //                        "imbatman")
+    //                        flag = true;
+    //                        //return; // Allow call to execute
+    //                    break;
+    //                }
+    //            }
 
-                // Fail the call if we get to here. Either the header
-                // isn't there or it contains invalid credentials.
-            }
+    //            // Fail the call if we get to here. Either the header
+    //            // isn't there or it contains invalid credentials.
+    //        }
 
-            //if (AfterDeserialize == "AfterDeserialize")
-            //{
-            //    if (!flag)
-            //    {
-            //        throw new SoapException("Unauthorized", SoapException.ClientFaultCode);
-            //        //return;
-            //    }
-            //}
-        }
+    //        //if (AfterDeserialize == "AfterDeserialize")
+    //        //{
+    //        //    if (!flag)
+    //        //    {
+    //        //        throw new SoapException("Unauthorized", SoapException.ClientFaultCode);
+    //        //        //return;
+    //        //    }
+    //        //}
+    //    }
 
-        public override Object GetInitializer(Type type)
-        {
-            return GetType();
-        }
+    //    public override Object GetInitializer(Type type)
+    //    {
+    //        return GetType();
+    //    }
 
-        public override Object GetInitializer(LogicalMethodInfo info,
-            SoapExtensionAttribute attribute)
-        {
-            return null;
-        }
+    //    public override Object GetInitializer(LogicalMethodInfo info,
+    //        SoapExtensionAttribute attribute)
+    //    {
+    //        return null;
+    //    }
 
-        public override void Initialize(Object initializer)
-        {
-        }
-    }
+    //    public override void Initialize(Object initializer)
+    //    {
+    //    }
+    //}
 }

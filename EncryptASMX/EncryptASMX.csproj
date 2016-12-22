@@ -58,7 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Test1.asmx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +76,16 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AuthExtension\AuthExtension.csproj">
+      <Project>{2312e3ba-2a85-4953-ba29-e94508e5f751}</Project>
+      <Name>AuthExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AuthHeader\AuthHeader.csproj">
+      <Project>{995fd392-318f-4b10-bd12-9235db3ef3a9}</Project>
+      <Name>AuthHeader</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

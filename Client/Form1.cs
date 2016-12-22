@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using System.Web.Services;
+using System.Net;
 using System.Web.Services.Protocols;
 
 namespace Client
@@ -27,7 +27,6 @@ namespace Client
             oAuth.Password = "Test";
 
             ServiceReference1.Test1SoapClient oClient =new ServiceReference1.Test1SoapClient();
-
             try
             {
                var o= oClient.Add(oAuth, 2, 3);
@@ -40,7 +39,6 @@ namespace Client
             {
                 
             }
-
         }
     }
 }
