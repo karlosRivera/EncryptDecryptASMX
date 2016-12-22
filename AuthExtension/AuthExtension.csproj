@@ -48,6 +48,10 @@
       <Project>{995fd392-318f-4b10-bd12-9235db3ef3a9}</Project>
       <Name>AuthHeader</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EncryptClass\EncryptClass.csproj">
+      <Project>{9a7f25b7-ca78-42ff-868f-bea99f972e18}</Project>
+      <Name>EncryptClass</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
