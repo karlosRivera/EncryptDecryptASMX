@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Web.Services.Protocols;
 
+
 namespace Client
 {
     public partial class Form1 : Form
@@ -20,6 +21,7 @@ namespace Client
 
         }
 
+        
         private void button1_Click(object sender, EventArgs e)
         {
             ServiceReference1.AuthenticateHeader oAuth = new ServiceReference1.AuthenticateHeader();

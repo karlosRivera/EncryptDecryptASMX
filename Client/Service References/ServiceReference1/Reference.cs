@@ -7,6 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using AuthExtension;
 
 namespace Client.ServiceReference1 {
     
@@ -157,7 +158,7 @@ namespace Client.ServiceReference1 {
         Client.ServiceReference1.AddResponse Client.ServiceReference1.Test1Soap.Add(Client.ServiceReference1.AddRequest request) {
             return base.Channel.Add(request);
         }
-        
+
         public string Add(Client.ServiceReference1.AuthenticateHeader AuthenticateHeader, int x, int y) {
             Client.ServiceReference1.AddRequest inValue = new Client.ServiceReference1.AddRequest();
             inValue.AuthenticateHeader = AuthenticateHeader;

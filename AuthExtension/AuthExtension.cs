@@ -100,17 +100,17 @@ namespace AuthExtension
                     // this is called at server side
                     xDoc.LoadXml(soapMsg1);
 
-                    XmlNodeList xSiteID = xDoc.GetElementsByTagName("siteID");
+                    XmlNodeList xSiteID = xDoc.GetElementsByTagName("UserName");
                     xSiteID[0].InnerXml = decrypt(xSiteID[0].InnerXml);
 
-                    XmlNodeList xSitePwd = xDoc.GetElementsByTagName("sitePwd");
+                    XmlNodeList xSitePwd = xDoc.GetElementsByTagName("Password");
                     xSitePwd[0].InnerXml = decrypt(xSitePwd[0].InnerXml);
 
-                    XmlNodeList xUserID = xDoc.GetElementsByTagName("UserID");
-                    xUserID[0].InnerXml = decrypt(xUserID[0].InnerXml);
+                    //XmlNodeList xUserID = xDoc.GetElementsByTagName("UserID");
+                    //xUserID[0].InnerXml = decrypt(xUserID[0].InnerXml);
 
-                    XmlNodeList xPwd = xDoc.GetElementsByTagName("Password");
-                    xPwd[0].InnerXml = decrypt(xPwd[0].InnerXml);
+                    //XmlNodeList xPwd = xDoc.GetElementsByTagName("Password");
+                    //xPwd[0].InnerXml = decrypt(xPwd[0].InnerXml);
                 }
 
                 soapMsg1 = xDoc.InnerXml;
