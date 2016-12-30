@@ -19,89 +19,34 @@ namespace EncryptASMX
     // [System.Web.Script.Services.ScriptService]
     public class Test1 : System.Web.Services.WebService
     {
-        public AuthenticateHeader Credentials;
+        public AuthenticateHeader CredentialsAuth;
 
         [AuthExtension]
-        [SoapHeader("Credentials", Required = true)]
+        [SoapHeader("CredentialsAuth", Required = true)]
         [WebMethod]
         public string Add(int x, int y)
         {
-            return (x + y).ToString();
+            string strValue = "";
+            if (CredentialsAuth.UserName == "Test" && CredentialsAuth.Password == "Test")
+            {
+                strValue = (x + y).ToString();
+            }
+            else
+            {
+                //throw new SoapException("Unauthorized", SoapException.ClientFaultCode);
+                Context.Response.Status = "403 Forbidden";
+                //the next line is untested - thanks to strider for this line
+                Context.Response.StatusCode = 403;
+                //the next line can result in a ThreadAbortException
+                //Context.Response.End(); 
+                Context.ApplicationInstance.CompleteRequest();
+                return null;
+            }
+            return strValue;
         }
     }
 
 
 
-    //[AttributeUsage(AttributeTargets.Method)]
-    //public class AuthExtensionAttribute : SoapExtensionAttribute
-    //{
-    //    int _priority = 1;
 
-    //    public override int Priority
-    //    {
-    //        get { return _priority; }
-    //        set { _priority = value; }
-    //    }
-
-    //    public override Type ExtensionType
-    //    {
-    //        get { return typeof(AuthExtension); }
-    //    }
-    //}
-
-    //public class AuthExtension : SoapExtension
-    //{
-    //    public override void ProcessMessage(SoapMessage message)
-    //    {
-    //        var AfterDeserialize = "";
-    //        bool flag = false;
-    //        if (message.Stage == SoapMessageStage.AfterDeserialize)
-    //        {
-    //            AfterDeserialize = "AfterDeserialize";
-    //            //Check for an AuthHeader containing valid
-    //            //credentials
-    //            foreach (SoapHeader header in message.Headers)
-    //            {
-    //                if (header is AuthenticateHeader)
-    //                {
-    //                    AuthenticateHeader credentials = (AuthenticateHeader)header;
-    //                    if (credentials.UserName.ToLower() ==
-    //                        "jeff" &&
-    //                        credentials.Password.ToLower() ==
-    //                        "imbatman")
-    //                        flag = true;
-    //                        //return; // Allow call to execute
-    //                    break;
-    //                }
-    //            }
-
-    //            // Fail the call if we get to here. Either the header
-    //            // isn't there or it contains invalid credentials.
-    //        }
-
-    //        //if (AfterDeserialize == "AfterDeserialize")
-    //        //{
-    //        //    if (!flag)
-    //        //    {
-    //        //        throw new SoapException("Unauthorized", SoapException.ClientFaultCode);
-    //        //        //return;
-    //        //    }
-    //        //}
-    //    }
-
-    //    public override Object GetInitializer(Type type)
-    //    {
-    //        return GetType();
-    //    }
-
-    //    public override Object GetInitializer(LogicalMethodInfo info,
-    //        SoapExtensionAttribute attribute)
-    //    {
-    //        return null;
-    //    }
-
-    //    public override void Initialize(Object initializer)
-    //    {
-    //    }
-    //}
 }

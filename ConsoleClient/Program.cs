@@ -11,12 +11,23 @@ namespace ConsoleClient
     {
         static void Main(string[] args)
         {
-            ServiceReference1.AuthenticateHeader oAuth = new ServiceReference1.AuthenticateHeader();
-            oAuth.UserName = "Test";
+            AsmxService.AuthenticateHeader oAuth = new AsmxService.AuthenticateHeader();
+            oAuth.UserName = "RTest";
             oAuth.Password = "Test";
 
-            ServiceReference1.Test1SoapClient oClient = new ServiceReference1.Test1SoapClient();
-            var o = oClient.CustomAdd(oAuth, 1, 2);
+            AsmxService.Test1 oClient = new AsmxService.Test1();
+            oClient.AuthenticateHeaderValue = oAuth;
+
+            try
+            {
+                var o = oClient.Add(1, 2);
+                Console.WriteLine(o);
+            }
+             catch (SoapException SoapEx)
+            {
+                Console.WriteLine(SoapEx.Message);
+            }
+            Console.ReadLine();
         }
     }
 }

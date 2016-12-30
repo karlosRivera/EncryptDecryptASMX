@@ -53,15 +53,15 @@ namespace AuthExtension
 
             if (message.Stage == SoapMessageStage.BeforeSerialize)
             {
-                if (message is System.Web.Services.Protocols.SoapClientMessage)
-                {
+                //if (message is System.Web.Services.Protocols.SoapClientMessage)
+                //{
 
-                }
+                //}
 
-                if (message is System.Web.Services.Protocols.SoapServerMessage)
-                {
+                //if (message is System.Web.Services.Protocols.SoapServerMessage)
+                //{
 
-                }
+                //}
             }
             else if (message.Stage == SoapMessageStage.AfterDeserialize)
             {
@@ -88,90 +88,79 @@ namespace AuthExtension
             }
             else if (message.Stage == SoapMessageStage.BeforeDeserialize)
             {
-                //readStr = new StreamReader(outwardStream);
-                //writeStr = new StreamWriter(inwardStream);
-                //soapMsg1 = readStr.ReadToEnd();
-                ////soapMsg2 = writeStr.ReadToEnd();
-                //if (message is System.Web.Services.Protocols.SoapClientMessage)
-                //{
-                //    // this is called at client side
-                //    //*xDoc.LoadXml(soapMsg1);
+                readStr = new StreamReader(outwardStream);
+                writeStr = new StreamWriter(inwardStream);
+                soapMsg1 = readStr.ReadToEnd();
+                //soapMsg2 = writeStr.ReadToEnd();
+                if (message is System.Web.Services.Protocols.SoapClientMessage)
+                {
+                    // this is called at client side
+                    xDoc.LoadXml(soapMsg1);
 
-                //    //						XmlNodeList xSiteID = xDoc.GetElementsByTagName("siteID");
-                //    //						xSiteID[0].InnerXml = decrypt(xSiteID[0].InnerXml);
-                //    //
-                //    //						XmlNodeList xSitePwd = xDoc.GetElementsByTagName("sitePwd");
-                //    //						xSitePwd[0].InnerXml = decrypt(xSitePwd[0].InnerXml);
-
-                //    //*XmlNodeList xResult = xDoc.GetElementsByTagName("AuthenticateResult");
-                //    //*xResult[0].InnerXml = decrypt(xResult[0].InnerXml);
-
+                    XmlNodeList xSiteID = xDoc.GetElementsByTagName("AddResult");
+                    xSiteID[0].InnerXml = decrypt(xSiteID[0].InnerXml);
                 }
                 else if (message is System.Web.Services.Protocols.SoapServerMessage)
                 {
-                    // this is called at server side
-                    //*xDoc.LoadXml(soapMsg1);
+                    //this is called at server side
+                    xDoc.LoadXml(soapMsg1);
 
-                    //*XmlNodeList xSiteID = xDoc.GetElementsByTagName("UserName");
-                    //*xSiteID[0].InnerXml = decrypt(xSiteID[0].InnerXml);
+                    XmlNodeList xSiteID = xDoc.GetElementsByTagName("UserName");
+                    xSiteID[0].InnerXml = decrypt(xSiteID[0].InnerXml);
 
-                    //*XmlNodeList xSitePwd = xDoc.GetElementsByTagName("Password");
-                    //*xSitePwd[0].InnerXml = decrypt(xSitePwd[0].InnerXml);
+                    XmlNodeList xSitePwd = xDoc.GetElementsByTagName("Password");
+                    xSitePwd[0].InnerXml = decrypt(xSitePwd[0].InnerXml);
 
-                    //XmlNodeList xUserID = xDoc.GetElementsByTagName("UserID");
-                    //xUserID[0].InnerXml = decrypt(xUserID[0].InnerXml);
+                    XmlNodeList param1 = xDoc.GetElementsByTagName("x");
+                    param1[0].InnerXml = decrypt(param1[0].InnerXml);
 
-                    //XmlNodeList xPwd = xDoc.GetElementsByTagName("Password");
-                    //xPwd[0].InnerXml = decrypt(xPwd[0].InnerXml);
-                //}
+                    XmlNodeList param2 = xDoc.GetElementsByTagName("y");
+                    param2[0].InnerXml = decrypt(param2[0].InnerXml);
+                }
 
-                //*soapMsg1 = xDoc.InnerXml;
-                //*writeStr.Write(soapMsg1);
-                //*writeStr.Flush();
-                //*inwardStream.Position = 0;
+                soapMsg1 = xDoc.InnerXml;
+                writeStr.Write(soapMsg1);
+                writeStr.Flush();
+                inwardStream.Position = 0;
             }
             else if (message.Stage == SoapMessageStage.AfterSerialize)
             {
-                //inwardStream.Position = 0;
-                //readStr = new StreamReader(inwardStream);
-                //writeStr = new StreamWriter(outwardStream);
-                //soapMsg1 = readStr.ReadToEnd();
-                //if (message is System.Web.Services.Protocols.SoapClientMessage)
-                //{
-                //    // this is called at client side
-                //    xDoc.LoadXml(soapMsg1);
+                inwardStream.Position = 0;
+                readStr = new StreamReader(inwardStream);
+                writeStr = new StreamWriter(outwardStream);
+                soapMsg1 = readStr.ReadToEnd();
 
-                //    XmlNodeList xSiteID = xDoc.GetElementsByTagName("siteID");
-                //    xSiteID[0].InnerXml = encrypt(xSiteID[0].InnerXml);
+                if (message is System.Web.Services.Protocols.SoapClientMessage)
+                {
+                    // this is called at client side
+                    xDoc.LoadXml(soapMsg1);
 
-                //    XmlNodeList xSitePwd = xDoc.GetElementsByTagName("sitePwd");
-                //    xSitePwd[0].InnerXml = encrypt(xSitePwd[0].InnerXml);
+                    XmlNodeList xSiteID = xDoc.GetElementsByTagName("UserName");
+                    xSiteID[0].InnerXml = encrypt(xSiteID[0].InnerXml);
 
-                //    XmlNodeList xUserID = xDoc.GetElementsByTagName("UserID");
-                //    xUserID[0].InnerXml = encrypt(xUserID[0].InnerXml);
+                    XmlNodeList xSitePwd = xDoc.GetElementsByTagName("Password");
+                    xSitePwd[0].InnerXml = encrypt(xSitePwd[0].InnerXml);
 
-                //    XmlNodeList xPwd = xDoc.GetElementsByTagName("Password");
-                //    xPwd[0].InnerXml = encrypt(xPwd[0].InnerXml);
+                    XmlNodeList param1 = xDoc.GetElementsByTagName("x");
+                    param1[0].InnerXml = encrypt(param1[0].InnerXml);
+
+                    XmlNodeList param2 = xDoc.GetElementsByTagName("y");
+                    param2[0].InnerXml = encrypt(param2[0].InnerXml);
 
                 }
                 else if (message is System.Web.Services.Protocols.SoapServerMessage)
                 {
-                //    // this is called at server side
-                //    xDoc.LoadXml(soapMsg1);
+                //    // this is called at server side@@
+                    xDoc.LoadXml(soapMsg1);
 
-                //    //						XmlNodeList xSiteID = xDoc.GetElementsByTagName("siteID");
-                //    //						xSiteID[0].InnerXml = encrypt(xSiteID[0].InnerXml);
-                //    //
-                //    //						XmlNodeList xSitePwd = xDoc.GetElementsByTagName("sitePwd");
-                //    //						xSitePwd[0].InnerXml = encrypt(xSitePwd[0].InnerXml);
+                    XmlNodeList xSiteID = xDoc.GetElementsByTagName("AddResult");
+                    if (xSiteID[0].InnerXml.Trim() != "")
+                        xSiteID[0].InnerXml = encrypt(xSiteID[0].InnerXml);
+                }
 
-                //    XmlNodeList xResult = xDoc.GetElementsByTagName("AuthenticateResult");
-                //    xResult[0].InnerXml = encrypt(xResult[0].InnerXml);
-                //}
-
-                //soapMsg1 = xDoc.InnerXml;
-                //writeStr.Write(soapMsg1);
-                //writeStr.Flush();
+                soapMsg1 = xDoc.InnerXml;
+                writeStr.Write(soapMsg1);
+                writeStr.Flush();
             }
 
 

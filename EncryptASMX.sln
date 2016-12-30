@@ -12,9 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptClass", "EncryptClass\EncryptClass.csproj", "{9A7F25B7-CA78-42FF-868F-BEA99F972E18}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{C987DFC7-A7B3-4E57-8F2F-8AEB455C3655}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B6353BA5-41BD-4E5E-969C-E15D73BF843C} = {B6353BA5-41BD-4E5E-969C-E15D73BF843C}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

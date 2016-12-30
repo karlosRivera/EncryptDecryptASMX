@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using AuthExtension;
 
-namespace ConsoleClient.ServiceReference1
+namespace ConsoleClient.AsmxService
 {
-    public partial class Test1SoapClient : System.ServiceModel.ClientBase<ConsoleClient.ServiceReference1.Test1Soap>, ConsoleClient.ServiceReference1.Test1Soap 
+    public partial class Test1 : System.Web.Services.Protocols.SoapHttpClientProtocol
     {
         [AuthExtension]
-        public string CustomAdd(ConsoleClient.ServiceReference1.AuthenticateHeader AuthenticateHeader, int x, int y)
+        [System.Web.Services.Protocols.SoapHeaderAttribute("AuthenticateHeaderValue")]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/Add", RequestNamespace = "http://tempuri.org/", ResponseNamespace = "http://tempuri.org/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string CustAdd(int x, int y)
         {
-            ConsoleClient.ServiceReference1.AddRequest inValue = new ConsoleClient.ServiceReference1.AddRequest();
-            inValue.AuthenticateHeader = AuthenticateHeader;
-            inValue.x = x;
-            inValue.y = y;
-            ConsoleClient.ServiceReference1.AddResponse retVal = ((ConsoleClient.ServiceReference1.Test1Soap)(this)).Add(inValue);
-            return retVal.AddResult;
+            object[] results = this.Invoke("Add", new object[] {
+                        x,
+                        y});
+            return ((string)(results[0]));
         }
     }
 }
